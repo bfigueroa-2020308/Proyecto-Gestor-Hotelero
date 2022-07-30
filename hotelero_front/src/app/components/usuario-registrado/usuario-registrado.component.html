@@ -1,0 +1,56 @@
+<app-navbar></app-navbar>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hoteles</title>
+
+    <link rel="stylesheet" href="./usuario-registrado.component.css" />
+</head>
+<body>
+    
+    <header>
+        <h1>Usuarios</h1>
+    </header>
+ 
+    <main>
+
+        <section class="sucursal-list">
+
+            <div id="sucursales" *ngFor="let usuario of users">
+
+                <div class="sucurusal">
+                    <div class="content">
+                        <input 
+                            type="text"
+                            class="text"
+                            value={{usuario.nombre}}
+                            readonly
+                            />
+                            <input 
+                            type="text"
+                            class="text"
+                            value={{usuario.apellido}}
+                            readonly
+                            />
+                            <input 
+                            type="text"
+                            class="text"
+                            value={{usuario.username}}
+                            readonly
+                            />
+                    </div>
+                   
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+</body>
+</html>

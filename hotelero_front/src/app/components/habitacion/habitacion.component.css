@@ -1,0 +1,152 @@
+:root {
+    color: gray;
+    color: white;
+    color: white;
+    color: dimgray;
+    color: azure;
+    color: orchid;
+    color: darkslateblue;
+}
+
+*{
+     box-sizing: border-box;
+     margin: 0;
+     font-family: 'Fira sans', sans-serif ; 
+ }
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 10vh;
+    background-color: #141A2B;
+    color: aliceblue;
+ }
+
+ header {
+     padding: 2rem 1rem;
+     max-width: 800px;
+     width: 100%;
+     margin: 0 auto;
+ }
+
+ header h1{
+     font-size: 2.5rem;
+     font-weight: 300;
+     color: var(grey) ;
+     margin-bottom: 1rem;
+ }
+
+ #new-sucursal-form {
+     display: flex;
+ }
+
+ input, button {
+     appearance: none;
+     border: none;
+     outline: none;
+     background: none;
+ }
+ 
+ #new-sucursal-input{
+     flex: 1 1 0%;
+     background-color: #1C398E;
+     padding: 1rem;
+     border-radius: 1rem;
+     margin-right: 1rem;
+     color: white;
+     font-size: 1.25rem;
+ }
+
+ #new-sucursal-input::placeholder {
+            color: darkgrey;
+ }
+
+ #new-sucursal-submit {
+     color: white;
+     font-size: 1.25rem;
+     font-weight: 700;
+     background-image: linear-gradient(to rigth, white);
+     /*background-image: linear-gradient(to rigth, blanchedalmond,
+     grey);
+     -webkit-background-clip: text;
+     -webkit-text-fill-color: transparent;*/
+     cursor: pointer;
+     transition: 0.4s;
+ }
+
+ #new-sucursal-submit:hover {
+     opacity: 0.8;
+ }
+
+#new-sucursal-submit:active {
+    opacity: 0.6;
+}
+
+main {
+    flex: 1 1 0%;
+    max-width: 800px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.sucursal-list {
+    padding: 1rem;
+}
+
+.sucursal-list h2 {
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: white;
+    margin-bottom: 1rem;
+}
+
+#sucursales .content {
+    display: flex;
+    justify-content: space-between;
+    background-color: #1C398E;
+    padding: 1rem;
+    border-radius: 1rem;
+    margin-bottom: 1rem;
+}
+----
+#sucursales .sucursal .content .text {
+    color: darkgrey;
+    font-size: 1.25rem;
+    width: 100%;
+    display: block;
+    transition: 00.4s;
+}
+
+#sucursales .sucursal .content .text:not(:read-only) {
+    color: cornsilk;
+}
+
+#sucursales .content .actions {
+    display: flex;
+    margin: 0 -0.5rem;
+}
+
+#content .actions button {
+    cursor: pointer;
+    margin: 0 0.5rem;
+    font-size: 1.125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    transition: 00.4s;
+}
+
+#sucursal .actions button:hover {
+    opacity: 0.8;
+}
+
+#sucursal .actions button:active {
+    opacity: 0.6;
+}
+
+#sucursal .actions .edit {
+    background: white;
+}
+
+/*.sucursal .actions .delete {
+    
+}*/
