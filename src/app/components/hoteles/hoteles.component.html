@@ -1,0 +1,143 @@
+<app-navbar></app-navbar>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width">
+    <title>Hoteles</title>
+
+    <link rel="stylesheet" href="./hoteles.component.css" />
+</head>
+<body>
+    
+    <header>
+        <h1>Hotel</h1>
+        <form id="new-sucursal">
+            <input type="submit"
+                    id="new-sucursal-submit"
+                    value="Add Hotel" 
+                    data-bs-target="#modalAgregar"
+                    data-bs-toggle="modal"
+                    *ngIf="identity.role=='SUPERADMIN'"/>
+        </form>
+    </header>
+ 
+    <main>
+
+        <section class="sucursal-list">
+            <h2>Hoteles</h2>
+
+            <div id="sucursales">
+        
+
+                <div class="sucurusal" *ngFor="let hotel of hoteles">
+                    <div class="content">
+                        <input 
+                            type="text"
+                            class="text"
+                            value={{hotel.nombre}}
+                            readonly
+                            />
+                            <input 
+                            type="text"
+                            class="text"
+                            value={{hotel.direccion}}
+                            readonly
+                            />
+                            <div class="actions">
+                                <button class="edit" data-bs-target="#modalActualizar" data-bs-toggle="modal" (click)="getOneHotel(hotel)" *ngIf="identity.role=='HOTELADMIN' || identity.role=='SUPERADMIN'"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+                                    <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
+                                  </svg></button>
+                                <button class="delete" (click)="eliminarHotel(hotel)" *ngIf="identity.role=='HOTELADMIN' || identity.role=='SUPERADMIN'"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash2-fill" viewBox="0 0 16 16">
+                                    <path d="M2.037 3.225A.703.703 0 0 1 2 3c0-1.105 2.686-2 6-2s6 .895 6 2a.702.702 0 0 1-.037.225l-1.684 10.104A2 2 0 0 1 10.305 15H5.694a2 2 0 0 1-1.973-1.671L2.037 3.225zm9.89-.69C10.966 2.214 9.578 2 8 2c-1.58 0-2.968.215-3.926.534-.477.16-.795.327-.975.466.18.14.498.307.975.466C5.032 3.786 6.42 4 8 4s2.967-.215 3.926-.534c.477-.16.795-.327.975-.466-.18-.14-.498-.307-.975-.466z"/>
+                                  </svg></button>
+                                <button (click)="getHotelStorage(hotel)"  routerLink="/habitaciones"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-door-fill" viewBox="0 0 16 16">
+                                    <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z"/>
+                                  </svg></button>
+                                <button (click)="getHotelStorage(hotel)" routerLink="/eventos">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-event-fill" viewBox="0 0 16 16">
+                                    <path d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v1h16V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4V.5zM16 14V5H0v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2zm-3.5-7h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5z"/>
+                                  </svg>
+                                </button>
+                            </div>
+                    </div>
+                  
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+</body>
+</html>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="modalAgregar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Nuevo Hotel</h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form #agregarForm="ngForm" (submit)="agregarHotel(agregarForm)">
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Nombre</label>
+                  <input [(ngModel)]="hotel.nombre" name="nombre" type="text" class="form-control" aria-describedby="nombre del hotel">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Direccion</label>
+                    <input [(ngModel)]="hotel.direccion" name="direccion" type="text" class="form-control" aria-describedby="nombre del hotel">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Administrador</label>
+                    <select [(ngModel)]="hotel.administrador" name="administrador"  class="form-control">
+                        <option value="" selected disabled>Elige Administrador</option>
+                        <option *ngFor="let usuario of usuarios" value={{usuario._id}}>{{usuario.username}}</option>
+                    </select>
+                  </div>
+                <button type="submit" class="btn btn-success" style="color:black" data-bs-dismiss="modal">Submit</button>
+              </form>
+        </div>
+        <div class="modal-footer">
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalActualizar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+              <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <form #actualizarForm="ngForm" (submit)="actualizar(actualizarForm)">
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Nombre</label>
+                      <input [(ngModel)]="oneHotel.nombre" name="nombre" type="text" class="form-control" aria-describedby="nombre del hotel">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Direccion</label>
+                        <input [(ngModel)]="oneHotel.direccion" name="direccion" type="text" class="form-control" aria-describedby="nombre del hotel">
+                      </div>
+                      <div class="form-group">
+                      </div>
+                    <button type="submit" class="btn btn-success" style="color:black" data-bs-dismiss="modal">Submit</button>
+                  </form>
+            </div>
+            <div class="modal-footer">
+            </div>
+          </div>
+        </div>
+      </div>

@@ -1,0 +1,27 @@
+<app-navbar></app-navbar>
+<form #agregarForm="ngForm" (submit)="agregarReservacion(agregarForm)">
+    <div class="form-group">
+      <label for="exampleInputEmail1">Habitacion</label>
+      <input type="text" disabled class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder={{this.habitacion.numero}}>
+    </div>
+    <div class="form-group">
+      <label for="exampleInputPassword1">Precio</label>
+      <input type="text" class="form-control" id="exampleInputPassword1" disabled placeholder={{this.habitacion.precio}}>
+    </div>
+    <div class="form-group">
+      <label for="exampleInputPassword1">Usuario</label>
+      <input name="usuario" type="text" class="form-control" id="exampleInputPassword1" disabled placeholder={{this.identity.username}}>
+    </div>
+    <div class="form-group">
+      <label for="exampleInputPassword1">Fecha</label>
+      <input [(ngModel)]="reservacion.fecha" name="fecha" type="date" class="form-control" id="exampleInputPassword1"  placeholder='Pon la fecha de tu reservacion'>;
+    </div>
+    <div class="form-group">
+      <label for="exampleInputPassword1">Servicios</label>
+      <select [(ngModel)]="reservacion.servicios" name="servicios" class="form-control">
+        <option value="" selected disabled>Elige el servicio</option>
+        <option *ngFor="let servicio of servicios" value={{servicio._id}}>{{servicio.nombre}}</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>

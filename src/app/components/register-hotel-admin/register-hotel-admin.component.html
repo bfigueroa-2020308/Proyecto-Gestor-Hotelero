@@ -1,0 +1,62 @@
+<app-navbar></app-navbar>
+<section class="body ">
+    <div class="container py-5 h-100">
+      <div class="container ">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+          <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+            <div class="card" style="border-radius: 15px;">
+              <div class="card-body p-5">
+                <h2 class="text-uppercase text-center mb-5">Create an account Hotel Admin</h2>
+  
+                <form #registerForm="ngForm" (ngSubmit)="agregarUserHotelAdmin(registerForm)">
+  
+                  <div class="form-outline mb-4">
+                    <span *ngIf="!name.valid && name.touched" class="required">
+                      Required field
+                    </span>
+                    <input [(ngModel)]="user.nombre" name="name" #name="ngModel" type="text" id="form3Example1cg" class="form-control form-control-lg" required="" />
+                    <label class="form-label" for="form3Example1cg">Name</label>
+                  </div>
+  
+                  <div class="form-outline mb-4">
+                    <span *ngIf="!LastName.valid && LastName.touched" class="required">
+                      Required field
+                    </span>
+                    <input [(ngModel)]="user.apellido" name="apellido" #LastName="ngModel" type="text" id="form3Example3cg" class="form-control form-control-lg" required="" />
+                    <label class="form-label" for="form3Example3cg">Last Name</label>
+                  </div>
+  
+                  <div class="form-outline mb-4">
+                    <span *ngIf="!UserName.valid && UserName.touched" class="required">
+                      Required field
+                    </span>
+                    <input [(ngModel)]="user.username" name="username" #UserName="ngModel" type="text" id="form3Example4cg" class="form-control form-control-lg" required="" />
+                    <label class="form-label" for="form3Example4cg">UserName</label>
+                  </div>
+  
+                  <div class="form-outline mb-4">
+                    <span *ngIf="!Password.valid && Password.touched" class="required">
+                      Required field
+                    </span>
+                    <input [(ngModel)]="user.password" name="password" #Password="ngModel" type="password" id="form3Example4cdg" class="form-control form-control-lg" required="" />
+                    <label  class="form-label" for="form3Example4cdg">password</label>
+                  </div>
+  
+                  <div class="d-flex justify-content-center">
+                    <button  type="submit"
+                      class="btn btn-success btn-block btn-lg gradient-custom-4">Register</button>
+                  </div>
+  
+                  <p class="text-center  mt-5 mb-0">Have already an account? <a routerLink="/login"
+                      class="link fw-bold"><u>Login here</u></a></p>
+  
+                </form>
+  
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+

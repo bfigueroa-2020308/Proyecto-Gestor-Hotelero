@@ -1,0 +1,21 @@
+<app-navbar></app-navbar>
+<form>
+    <div class="form-group">
+      <label for="exampleInputEmail1">Usuario</label>
+      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" disabled value={{this.identity.username}}>
+    </div>
+    <div class="form-group">
+        <label for="exampleInputEmail1">Habitacion</label>
+        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" disabled value={{this.habitacion.numero}}>
+      </div>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Servicio</label>
+        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" disabled value={{this.servicio.nombre}}>
+      </div>
+    <div class="form-group">
+      <label for="exampleInputPassword1">Total</label>
+      <h1 class="form-control" disabled>{{this.servicio.precio + this.habitacion.precio}}</h1>
+    </div>
+    <button type="submit" class="btn btn-primary" routerLink="/hoteles">Continuar</button>
+  </form>
+
