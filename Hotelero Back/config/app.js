@@ -7,6 +7,8 @@ const helmet = require('helmet');
 const userRoutes = require('../src/routes/user.routes');
 const hotelRoutes = require('../src/routes/hotel.routes');
 const habitacionRoutes = require('../src/routes/habitacion.routes');
+const eventoRoutes = require('../src/routes/evento.routes');
+const servicioRoutes = require('../src/routes/servicio.routes');
 
 const app = express();
 
@@ -17,5 +19,7 @@ app.use(bodyParser.urlencoded({extended:false}));
 app.use('/user', userRoutes);
 app.use('/hotel', hotelRoutes);
 app.use('/habitacion', habitacionRoutes);
+app.use('/evento', eventoRoutes);
+app.use('/servicio', servicioRoutes);
 
 module.exports = app;

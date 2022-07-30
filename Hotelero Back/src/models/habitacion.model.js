@@ -8,8 +8,8 @@ const habitacionSchema = {
     precio : Number,
     reservada : Boolean,
     ocupada : Boolean,
-    hotel : {type: moongose.Schema.ObjectId, ref:'Hotel'},
-    usuario :{type : moongose.Schema.ObjectId, ref:'User'}
+    hotel : {type: moongose.Schema.ObjectId, ref:'Hotel'}, 
+    user :{type:moongose.Schema.ObjectId, ref:'User'}
 }
 
 module.exports = moongose.model('Habitacion', habitacionSchema);

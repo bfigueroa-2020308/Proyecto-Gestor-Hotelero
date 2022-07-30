@@ -3,6 +3,10 @@
 const Habitacion = require('../models/habitacion.model');
 const Hotel = require('../models/hotel.model');
 const User = require('../models/usuario.model');
+const Reservacion = require('../models/reservacion.model');
+const Servicio = require('../models/servicio.model');
+const Factura = require('../models/factura.model');
+const Historial = require('../models/historial.model');
 const {validateData, checkUpdate} = require('../services/validate');
 
 exports.test = async(req,res)=>{
@@ -91,7 +95,7 @@ exports.actualizarHabitacion = async(req,res)=>{
 
 exports.verHabitaciones = async(req,res)=>{
     try{
-        const habitaciones = await Habitacion.find().populate('hotel').populate('usuario').lean();
+        const habitaciones = await Habitacion.find().populate('hotel').populate('user').lean();
         if(habitaciones){
             return res.send({habitaciones});
         }else{
@@ -103,14 +107,115 @@ exports.verHabitaciones = async(req,res)=>{
     }
 }
 
+exports.verHabitacionesPorHotel = async(req,res)=>{
+    try{
+        const hotelID = req.params.id;
+        const habitaciones = await Habitacion.find({hotel:hotelID}).populate('hotel').populate('user').lean();
+        if(habitaciones){
+            return res.send({habitaciones});
+        }else{
+            return res.status(404).send({message:'Habitaciones no encontradas'});
+        }
+    }catch(err){
+        console.log(err);
+        return err;
+    }
+}
+
 exports.verHabitacion = async(req,res)=>{
     try{
         const habitacionID = req.params.id;
-        const existingHabitacion = await Habitacion.findOne({_id:habitacionID}).populate('hotel').populate('usuario').lean();
+        const existingHabitacion = await Habitacion.findOne({_id:habitacionID}).populate('hotel').populate('user').lean();
         if(existingHabitacion){
             return res.send({existingHabitacion});
         }else{
             return res.status(404).send({message:'habitacion no encontrada'});
+        }
+    }catch(err){
+        console.log(err);
+        return err;
+    }
+}
+
+exports.reservarHabitcion = async(req,res)=>{
+    try{
+        const habitacionID = req.params.idH;
+        const userID = req.params.idU;
+        const params = req.body;
+        const data ={
+            fecha : params.fecha,
+            habitacion : habitacionID,
+            usuario : userID
+        }
+        const msg = await validateData(data)
+        if(!msg){
+            const alreadyHabitacion = await Habitacion.findOne({_id:habitacionID});
+            if(alreadyHabitacion && alreadyHabitacion.reservada === false){
+                if(params.servicios){
+                    const existingServicio = await Servicio.findOne({_id:params.servicios});
+                    if(existingServicio){
+                        data.servicios = params.servicios;
+                        const reservacion = await new Reservacion(data);
+                        reservacion.save();
+                        await Habitacion.findOneAndUpdate({_id:habitacionID}, {
+                            reservada:true,
+                            ocupada:true
+                        }, {new:true});
+                        const factura = await new Factura({
+                            habitacion : habitacionID,
+                            usuario : userID,
+                            total : alreadyHabitacion.precio + existingServicio.precio
+                        });
+                        factura.save();
+                        const historial =await new Historial({
+                            user : userID,
+                            habitacion : habitacionID,
+                            servicios : params.servicios
+                        })
+                        historial.save();
+                        return res.send({message:'reservacion agregada'});
+                    }else{
+                        return res.status(404).send({message:'Servicio no encontrado'});s
+                    }
+                }else{ 
+                    const reservacion = await new Reservacion(data);
+                    reservacion.save();
+                    await Habitacion.findOneAndUpdate({_id:habitacionID}, {
+                        reservada:true,
+                        ocupada: true
+                    }, {new:true});
+                   const factura = await new Factura({
+                        habitacion : habitacionID,
+                        usuario : userID,
+                        total : alreadyHabitacion.precio
+                    });
+                    factura.save()
+                    const historial =await new Historial({
+                        user : userID,
+                        habitacion : habitacionID
+                    })
+                    historial.save()
+                    return res.send({message:'reservacion agregada'});
+                }
+            }else{
+                return res.status(404).send({message:'Habitacion no encontrada o ya reservada'});
+            }
+        }else{
+            return res.status(400).send(msg);
+        }
+    }catch(err){
+        console.log(err);
+        return err;
+    }
+}
+
+exports.habitacionDisponible = async(req,res)=>{
+    try{
+        const habitacionesDisponibles = await Habitacion.find({ocupada:false});
+        if(habitacionesDisponibles){
+            return res.send({habitacionesDisponibles});
+        }else{
+            return res.status(404).send({message:'No hay habitaciones disponibles'});
         }
     }catch(err){
         console.log(err);

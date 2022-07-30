@@ -3,7 +3,7 @@
 const moongose = require('mongoose');
 
 exports.init=()=>{
-    const uriMongo = 'mongodb://127.0.0.1:27017/HotelesDB'
+    const uriMongo = 'mongodb+srv://admin:admin@cluster0.v5maox0.mongodb.net/?retryWrites=true&w=majority'
     moongose.Promise = global.Promise;
     moongose.connection.on('error',()=>{
         console.log('ERROR || No se pudo conectar con MongoDB');

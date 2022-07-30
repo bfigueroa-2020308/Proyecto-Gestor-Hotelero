@@ -102,7 +102,7 @@ exports.crearHotelAdmin = async(req,res)=>{
 
 exports.eliminarUsuario = async(req,res)=>{
     try{
-        const userId = req.params.id;
+        const userId = req.user.sub;
         const existingUser = await User.findOne({_id:userId});
         if(existingUser){
             if(existingUser.role!='SUPERADMIN'){
@@ -127,7 +127,7 @@ exports.eliminarUsuario = async(req,res)=>{
 exports.actualizarUsuario = async(req,res)=>{
     try{
         const params = req.body;
-        const userId = req.params.id;
+        const userId = req.user.sub;
         const check = await checkUpdate(params);
         if(check == true){
             const userExist = await User.findOne({_id:userId});
@@ -207,6 +207,20 @@ exports.mostrarUsuario = async(req,res)=>{
             return res.send({user})
         }else{
             return res.status(404).send({message:'Usuario no encontrado'});
+        }
+    }catch(err){
+        console.log(err);
+        return err;
+    }
+}
+
+exports.mostrarHotelAdmins = async(req,res)=>{
+    try{
+        const hotelAdmins = await User.find({role:'HOTELADMIN'});
+        if(hotelAdmins){
+            return res.send({hotelAdmins});
+        }else{
+            return res.status(404).send({message:'usuarios no encontrados'});
         }
     }catch(err){
         console.log(err);

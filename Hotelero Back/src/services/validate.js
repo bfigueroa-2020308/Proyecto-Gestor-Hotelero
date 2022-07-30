@@ -15,7 +15,7 @@ exports.validateData = (data)=>{
 
 exports.checkUpdate = async(user)=>{
     try{
-        if(Object.entries(user).length == 0 || user.role || user.password || user.hotel || user.numero){
+        if(Object.entries(user).length == 0||user.role=='SUPERADMIN'){
             return false
         }else{
             return true;
